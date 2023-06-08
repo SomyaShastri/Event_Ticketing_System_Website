@@ -18,14 +18,14 @@ app.use(express.static(root))
 // app.use(express.static(path.join(__dirname, 'ticketmaster/dist/ticketmaster/index.html')))
 
 app.use(bodyParser.json());
-const api_key = "SXzMRQ9A6CROGJwPzsGOs5dmWcOI9RPC";
+const api_key = "<API key here>";
 //const { response } = require('express');
 
 
 app.get('/autocomplete', async function (request, res) {
     var keyword = request.query.keyword;
     console.log(keyword);
-    var apiUrl = "https://app.ticketmaster.com/discovery/v2/suggest.json?apikey=SXzMRQ9A6CROGJwPzsGOs5dmWcOI9RPC&keyword=" + keyword;
+    var apiUrl = "https://app.ticketmaster.com/discovery/v2/suggest.json?apikey=<API key here>&keyword=" + keyword;
     console.log(apiUrl)
     await axios.get(apiUrl).then(response => {
         //return response.data;
@@ -268,8 +268,8 @@ app.get('/event_details', async function (request, res) {
 })
 
 const spotifyApi = new SpotifyWebApi({
-    clientId: '01cbc86a09384f4891df357353cff87b',
-    clientSecret: '0f2f31544fcf456cbcafc43ae5bf528d',
+    clientId: '<client id>',
+    clientSecret: '<client secret>',
 });
   
 async function getArtistDetails(artistName){
@@ -428,12 +428,15 @@ app.get('*', function(req, res) {
     res.sendFile("index.html",{root});
 })
 
+// if want to run on localhost
 // var server = app.listen(8081, function () {
 //     var host = server.address().address
     // var port = server.address().port
 
 //     console.log("Example app listening at http//%s%s", host, port)
 // })
+
+// if uploading on aws
 app.listen(process.env.PORT || port,() => console.log(`server listening on port ${port}`) );
 
 
