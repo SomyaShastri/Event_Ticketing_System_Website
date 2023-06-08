@@ -95,14 +95,14 @@ export class Component1Component {
   }
 
   async getIpInfo() {
-    const apiUrl = 'https://ipinfo.io/?token=7e8037c391fffd'
+    const apiUrl = 'https://ipinfo.io/?token=<token>'
     const response: any = await firstValueFrom(this.http.get(apiUrl))
     const { loc } = response;
     [this.latitude, this.longitude] = loc.split(',');
   }
 
   async getLocation(locationTextBox: string) {
-    var apiKey = "AIzaSyDLee5uk4GKhBcLN8J9kD_AjMY_Kir7RBs";
+    var apiKey = "<Apikey>";
     const apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(locationTextBox) + "&key=" + apiKey;
     console.log(apiUrl);
     const response: any = await firstValueFrom(this.http.get(apiUrl))
