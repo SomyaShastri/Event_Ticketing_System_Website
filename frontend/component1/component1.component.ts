@@ -234,7 +234,7 @@ export class Component1Component {
   center = { lat: 0, lng: 0 };
 
   googleMapCoordFetch(add: string): Promise<any> {
-    var apiKey = "AIzaSyDLee5uk4GKhBcLN8J9kD_AjMY_Kir7RBs";
+    var apiKey = "<key>";
     const apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(add) + "&key=" + apiKey;
     console.log(apiUrl);
     return firstValueFrom(this.http.get(apiUrl));
