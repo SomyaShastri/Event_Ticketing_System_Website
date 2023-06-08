@@ -1,0 +1,35 @@
+<div *ngIf="showFavTable">
+  <div class="text-center mt-2">
+    <span class="api2head">List of your favorite events</span>
+  </div>
+  <div class="col-sm-8 p-1 mx-auto table-responsive">
+    <table class="table table-hover rounded rounded-3 overflow-hidden text-center" style="background-color: white;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Date</th>
+          <th scope="col">Event</th>
+          <th scope="col">Category</th>
+          <th scope="col">Venue</th>
+          <th scope="col">Favorite</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rowval of values; let srNo=index">
+          <th scope="row">{{srNo+1}}</th>
+          <td>{{rowval.date}}</td>
+          <td>{{rowval.event}}</td>
+          <td>{{rowval.category}}</td>
+          <td>{{rowval.venue}}</td>
+          <td>
+            <i class="bi bi-trash" (click)="removeItem(rowval.eveid)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="showFailTable" class="text-danger mx-auto text-center col-7 rounded mt-5" style="background-color: white;">
+  <h3 class="fw-bold">No favorite events to show</h3>
+</div>

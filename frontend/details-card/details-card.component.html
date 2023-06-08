@@ -1,0 +1,185 @@
+<div class="detailsCardHolder text-center">
+  <h1>{{eventDetails.evename}}
+    <span (click)="addToFav(eventDetails)">
+      <mat-icon aria-hidden="false" fontIcon={{eventDetails.favIcon}} color={{eventDetails.color}}
+        class={{eventDetails.classs}}></mat-icon>
+    </span>
+  </h1>
+  <mat-tab-group mat-align-tabs="center" backgroundColor="primary" style="color:white !important" mat-stretch-tabs="false">
+    <mat-tab label="Events">
+      <div class="card card-body">
+        <div class="row align-items-center">
+          <div class="col-sm-6">
+            <div *ngIf="eventDetails.date" class="mt-4">
+              <p class="api2head">Date</p>
+              <p class="api2data">{{eventDetails.date}}</p>
+            </div>
+            <div *ngIf="eventDetails.name" class="mt-4">
+              <p class="api2head">Artist/Team</p>
+              <p class="api2data">{{eventDetails.name}}</p>
+            </div>
+            <div *ngIf="eventDetails.venue" class="mt-4">
+              <p class="api2head">Venue</p>
+              <p class="api2data">{{eventDetails.venue}}</p>
+            </div>
+            <div *ngIf="eventDetails.genre" class="mt-4">
+              <p class="api2head">Genres</p>
+              <p class="api2data">{{eventDetails.genre}}</p>
+            </div>
+            <div *ngIf="eventDetails.price" class="mt-4">
+              <p class="api2head">Price Ranges</p>
+              <p class="api2data">{{eventDetails.price}}</p>
+            </div>
+            <div *ngIf="eventDetails.status" class="mt-4">
+              <p class="api2head">Ticket Status</p>
+              <div [ngSwitch]="eventDetails.status" class="d-flex justify-content-center">
+                <ng-container *ngSwitchCase="'onsale'">
+                  <p class="onsale">On sale</p>
+                </ng-container>
+                <ng-container *ngSwitchCase="'offsale'">
+                  <p class="offsale">Off sale</p>
+                </ng-container>
+                <ng-container *ngSwitchCase="'cancelled'">
+                  <p class="canceled">Canceled</p>
+                </ng-container>
+                <ng-container *ngSwitchCase="'postponed'">
+                  <p class="rescheduled">Postponed</p>
+                </ng-container>
+                <ng-container *ngSwitchCase="'rescheduled'">
+                  <p class="rescheduled">Rescheduled</p>
+                </ng-container>
+              </div>
+            </div>
+            <div *ngIf="eventDetails.buyurl" class="mt-3">
+              <p class="api2head">Buy Ticket At:</p>
+              <p class="api2data"><a [href]="eventDetails.buyurl" target="_blank">Ticketmaster</a></p>
+            </div>
+          </div>
+          <div class="col-sm-6 mt-4">
+            <div *ngIf="eventDetails.seatmap">
+              <img [src]="eventDetails.seatmap" class="img-fluid" align="right">
+            </div>
+          </div>
+        </div>
+        <div>
+          Share on:
+          <a href="https://twitter.com/intent/tweet?text=Check%20{{eventDetails.evename}}%20on%20Ticketmaster&url={{eventDetails.buyurl}}"
+            target="_blank" class="fa fa-twitter"
+            style="font-size:30px; color: rgb(5,166,209); margin-right: 5px; text-decoration: none;">
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{eventDetails.buyurl}}" target="_blank"
+            class="fa fa-facebook-official" style="font-size:30px; color:blue;">
+          </a>
+        </div>
+
+      </div>
+    </mat-tab>
+    <mat-tab label="Artist/Teams">
+      <div *ngIf="spotifyDetails.length === 0" class="text-danger mx-auto col-sm-6 rounded fw-bold my-5"
+        style="background-color: white;">
+        No music related artist details to show
+      </div>
+      <ngb-carousel *ngIf="spotifyDetails.length" [showNavigationArrows]="spotifyDetails.length !== 1"
+        [showNavigationIndicators]="false" [interval]="0" style="padding:0 100px;">
+        <ng-template ngbSlide *ngFor="let artst of spotifyDetails">
+          <div class="row pt-4">
+            <div class="col-sm-3 align-self-center">
+              <img [src]="artst.img" class="img-fluid rounded-circle">
+              <p class="api2head">{{artst.name}}</p>
+            </div>
+            <div class="col-sm-3 mt-4 ">
+              <p class="api2head">Popularity</p>
+              <mat-progress-spinner color="warn" mode="determinate" [value]="artst.popularity" [diameter]="42"
+                style="margin-right:auto ; margin-left:auto"></mat-progress-spinner>
+              <span style="position:relative; top: -33px;color:white">{{artst.popularity}}</span>
+            </div>
+            <div class="col-sm-3 mt-4 ">
+              <p class="api2head">Followers</p>
+              <p class="api2data">{{artst.foll | number:'1.0-0'}}</p>
+            </div>
+            <div class="col-sm-3  mt-4">
+              <p class="api2head">Spotify Link</p>
+              <a [href]="artst.spoturl" target="_blank">
+                <i class="fa fa-spotify" style="font-size: 40px; color:#1db954;">
+                </i>
+              </a>
+            </div>
+          </div>
+          <p class="api2head text-start">Album featuring {{artst.name}}</p>
+          <div class="row">
+            <div class="col-sm-4 p-4"><img [src]="artst.albums[0]" class="img-fluid"></div>
+            <div class="col-sm-4 p-4"><img [src]="artst.albums[1]" class="img-fluid"></div>
+            <div class="col-sm-4 p-4"><img [src]="artst.albums[2]" class="img-fluid"></div>
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </mat-tab>
+    <mat-tab label="Venue">
+      <div class="mt-4 pr-2">
+        <div class="row">
+          <div class="col-sm-6">
+            <div *ngIf="venueDetails.name" class="mt-4">
+              <p class="api2head">Name</p>
+              <p class="api2data">{{venueDetails.name}}</p>
+            </div>
+            <div *ngIf="venueDetails.address" class="mt-4">
+              <p class="api2head">Address</p>
+              <p class="api2data">{{venueDetails.address}}</p>
+            </div>
+            <div *ngIf="venueDetails.phno" class="mt-4">
+              <p class="api2head">Phone Number</p>
+              <p class="api2data">{{venueDetails.phno}}</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div *ngIf="venueDetails.openhrs" class="mt-4">
+              <p class="api2head">Open Hours</p>
+              <p [ngClass]="{'isExpanded1': isExpanded1}" class="truncate dataValue">{{venueDetails.openhrs}}</p>
+              <div class="col-12 text-center" style="cursor: pointer;">
+                <p *ngIf="!isExpanded1" class="text-decoration-underline" (click)="isExpanded1 = true"
+                  style="color:#87ceeb">Show More<i class="fa fa-angle-down" style="color: white"></i></p>
+                <p *ngIf="isExpanded1" class="text-decoration-underline" (click)="isExpanded1 = false"
+                  style="color:#87ceeb">Show less<i class="fa fa-angle-up" style="color: white"></i></p>
+              </div>
+            </div>
+            <div *ngIf="venueDetails.genrule" class="mt-4">
+              <p class="api2head">General Rule</p>
+              <p [ngClass]="{'isExpanded2': isExpanded2}" class="truncate dataValue">{{venueDetails.genrule}}</p>
+              <div class="col-12 text-center" style="cursor: pointer;">
+                <p *ngIf="!isExpanded2" class="text-decoration-underline" (click)="isExpanded2 = true"
+                  style="color:#87ceeb">Show More<i class="fa fa-angle-down" style="color: white"></i></p>
+                <p *ngIf="isExpanded2" class="text-decoration-underline" (click)="isExpanded2 = false"
+                  style="color:#87ceeb">Show less<i class="fa fa-angle-up" style="color: white"></i></p>
+              </div>
+            </div>
+            <div *ngIf="venueDetails.childrule" class="mt-4">
+              <p class="api2head ">Child Rule</p>
+
+              <p [ngClass]="{'isExpanded3': isExpanded3}" class="truncate dataValue">{{venueDetails.childrule}}</p>
+              <div class="col-12 text-center" style="cursor: pointer;">
+                <p *ngIf="!isExpanded3" class="text-decoration-underline" (click)="isExpanded3 = true"
+                  style="color:#87ceeb">Show More<i class="fa fa-angle-down" style="color: white"></i></p>
+                <p *ngIf="isExpanded3" class="text-decoration-underline" (click)="isExpanded3 = false"
+                  style="color:#87ceeb">Show less<i class="fa fa-angle-up" style="color: white"></i></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-danger mx-auto my-3" (click)="open(content)">Show venue on Google map</button>
+        <ng-template #content let-modal>
+          <div class="modal-header">
+            <h2 class="modal-title" id="modal-basic-title" style="color:black">Event Venue</h2>
+          </div>
+          <div class="modal-body">
+            <div class="my-google-map m-2">
+              <google-map [options]="mapOptions" width="100%" height="400">
+                <map-marker [position]="marker.position"></map-marker>
+              </google-map>
+            </div>
+            <button type="button" class="btn btn-dark float-left" (click)="modal.close()">Close</button>
+          </div>
+        </ng-template>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

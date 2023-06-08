@@ -1,0 +1,92 @@
+<div class="transbox col-sm-6 mx-auto my-5 rounded" role="main">
+  <div class="p-5">
+    <div class="text-center">
+      <span class="fs-1" style="font-family: 'Times New Roman', Times, serif;">Event Search</span>
+    </div>
+    <hr style="color:white; width:100%">
+    <form #myForm="ngForm">
+      <div class="row">
+        <label for="keyword" class="text-info form-label required p-0">Keyword</label>
+        <input matInput [(ngModel)]="selectedKeyword" [matAutocomplete]="auto" [formControl]="searchKeywordCtrl"
+          name="keyword" required class="custom-input form-control" id="keywordName">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected($event)" [displayWith]="displayWith">
+          <mat-option *ngIf="isLoading">
+            <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+          </mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let names of filteredKeyword" [value]="names">
+              <span>{{names['name']}}</span>
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </div>
+
+      <div class="row mt-3 p-0">
+        <div class="col-sm-6 pe-2 ps-0">
+          <label for="distance" class="form-label text-info">Distance (miles)</label>
+          <input type="number" id="distance" name="distance" placeholder="10" class="form-control" ngModel>
+        </div>
+        <div class="col-sm-6 ps-0">
+          <label for="category" class="form-label text-info required p-0">Category</label>
+          <select id="category" name="category" [(ngModel)]="selectedValue" class="form-select">
+            <option value="default">Default</option>
+            <option value="music">Music</option>
+            <option value="sports">Sports</option>
+            <option value="arts">Arts & Theatre</option>
+            <option value="film">Film</option>
+            <option value="miscellaneous">Miscellaneous</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <label for="location" class="form-label text-info required p-0">Location</label>
+        <input type="text" id="locationTextBox" name="locationTextBox" [disabled]="textboxDisabled"
+          [(ngModel)]="textboxValue" class="form-control " required>
+      </div>
+      <div class="form-check mt-3 ps-1">
+        <input type="checkbox" id="locationCheckBox" name="locationCheckBox" class="form-check-input"
+          (change)="onCheckboxChange($event)" [(ngModel)]="locationCheckBox">
+        <label for="locationCheckBox" class="form-check-label text-info">Auto-detect your location</label>
+      </div>
+      <div class="mt-2 d-flex justify-content-center">
+        <button type="button" class="btn btn-danger me-3" (click)="formValidation(myForm)">SUBMIT</button>
+        <button type="button" class="btn btn-primary" (click)="clearForm()">CLEAR</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="showEverythingElse">
+  <div *ngIf="displayErrorTable" class="text-center text-danger fw-bold mx-auto col-8" style="background-color: white;">
+    No results available</div>
+  <div *ngIf="displayEveTable" class="mt-5 table-responsive col-12 col-sm-8 mx-auto ng-star-inserted">
+    <table class="table table-striped table-dark rounded rounded-3 overflow-hidden text-center ">
+      <thead>
+        <tr>
+          <th scope="col">Date/Time</th>
+          <th scope="col">Icon</th>
+          <th scope="col">Event</th>
+          <th scope="col">Genre</th>
+          <th scope="col">Venue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of tableData" (click)="api2(row.eveId)" style="cursor: pointer;">
+          <td>{{row.date}}</td>
+          <td style="width: fit-content;" class="py-10">
+            <img [src]="row.imgurl" style="width: 80px; height: 80px;">
+          </td>
+          <td>{{row.evename}}</td>
+          <td>{{row.genre}}</td>
+          <td>{{row.venue}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="transbox my-5 col-sm-8 mx-auto" *ngIf="displayDetCard">
+    <p class="fa fa-angle-left p-3" (click)="goBack()" style="cursor: pointer;"><u>Back</u></p>
+    <app-details-card [eventDetails]="eventData" [spotifyDetails]="spotifyData" [venueDetails]="venueData"
+      [coord]="center"></app-details-card>
+  </div>
+</div>

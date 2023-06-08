@@ -1,0 +1,23 @@
+.spacer {
+    flex: 1;
+}
+
+.toolbar {
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+}
+
+.btn-primary-outline {
+    background-color: transparent;
+    color: white;
+}
+
+a.active {
+    border-color: white;
+    border-radius: 12px;
+}

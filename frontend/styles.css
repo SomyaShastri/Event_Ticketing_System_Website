@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    background-image: url(background.jpg);
+    background-attachment: fixed;
+    background-color: black;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-mdc-tab-group.mat-background-primary, .mat-mdc-tab-nav-bar.mat-background-primary {
+    --mat-mdc-tab-header-with-background-foreground-color: #2618d6  !important;
+}
+/* .mat-mdc-tab-group.mat-tabs-with-background>.mat-mdc-tab-header .mat-mdc-tab .mdc-tab_text-label, .mat-mdc-tab-group.mat-tabs-with-background>.mat-mdc-tab-header .mat-mdc-tab-link .mdc-tab_text-label {
+    color: white !important;
+} */
+.mat-mdc-tab-group.mat-tabs-with-background>.mat-mdc-tab-header .mat-mdc-tab .mdc-tab__text-label, .mat-mdc-tab-group.mat-tabs-with-background>.mat-mdc-tab-header .mat-mdc-tab-link .mdc-tab__text-label {
+    /* color: var(--mat-mdc-tab-header-with-background-foreground-color, inherit); */
+    color: white !important;
+}
